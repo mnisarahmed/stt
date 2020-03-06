@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        fieldset {
+            border: 1px solid #ddd !important;
+            margin-top: 0px;
+            padding: 10px;
+            position: relative;
+            padding-left: 10px !important;
+        }
+
+        .right {
+            float: right;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="right">
+            <img id="start_img" src="mic.gif" alt="Start" />
+        </div>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-11 left">
+                    <h1>Doctor's</h1>
+                    <h3>Medical Prescription</h3>
+                </div>
+                <div class="col-md-1 right ">
+                    <h1>R<sub>x</sub></h1>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <fieldset>
+                    <legend>Patient Details:</legend>
+                    <div class="form-inline">
+                        <div class="mb-2 mr-sm-2 ">
+                            Patient Name:
+                            <input type="text" class="form-control" id="txtPtName" tabindex="1" />
+                        </div>
+                        <div class="mb-2 mr-sm-2 ml-1">
+                            Patient's Father Name:
+                            <input type="text" class="form-control" id="txtPtFather" tabindex="2" />
+                        </div>
+                        <div class=" mb-2 mr-sm-2 ml-1">
+                            Address:
+                            <input type="text" class="form-control" id="txtAddress" tabindex="3" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>General Examination :</legend>
+                    <div class="form-inline">
+                        <div class="mb-2 mr-sm-2 ">
+                            Pulse:
+                            <input type="text" class="form-control" id="txtPulse" tabindex="4" />
+                        </div>
+                        <div class="mb-2 mr-sm-2 ml-1">
+                            Blood Pressure:
+                            <input type="text" class="form-control" id="txtBP" tabindex="5" />
+                        </div>
+                        <div class=" mb-2 mr-sm-2 ml-1">
+                            Height:
+                            <input type="text" class="form-control" id="txtHeight" tabindex="6" />
+                        </div>
+                        <div class="mb-2 mr-sm-2 ml-1">
+                            Weight:
+                            <input type="text" class="form-control" id="txtWeight" tabindex="7" />
+                        </div>
+                        <div class=" mb-2 mr-sm-2 ml-1">
+                            SPO<sub>2</sub>:
+                            <input type="text" class="form-control" id="txtSPO2" tabindex="8" />
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group">
+                        Chief Complaints:
+                        <textarea class="form-control my-sm-2" id="txtComplaints" tabindex="9"></textarea>
+                    </div>
+                    <div class="form-group">
+                        Investigation Advised:
+                        <textarea class="form-control my-sm-2" id="txtInvestigation" tabindex="10"></textarea>
+                    </div>
+                    <div class="form-inline mb-2 mr-sm-2 ">
+                        Medication :
+                        <input type="text" class="form-control ml-3 col-md-5 " placeholder="Drug" tabindex="11" id="txtMedication" />
+                        <input type="text" class="form-control ml-3 col-md-2 " placeholder="Unit (Tablet/ Syrup)" tabindex="12" id="txtUnit" />
+                        <input type="text" class="form-control ml-3 col-md-3  " placeholder="Dosage" tabindex="13" id="txtDosage" />
+                    </div>
+                    <fieldset>
+                        <table class="table" id="tblMedication">
+                            <thead>
+                                <tr>
+                                    <th width="40%">Drugs</th>
+                                    <th width="30%">Unit (Tablet / Syrup)</th>
+                                    <th width="30%">Dosage (Per Day)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <div class="form-group">
+                        Follow Up :
+                        <textarea class="form-control my-sm-2 " tabindex="14" id="txtFollowUp"></textarea>
+                    </div>
+                </fieldset>
+                <button type="button" id="btnSubmit" tabindex="15" class="btn btn-success my-3 right">Submit</button>
+            </div>
+        </div>
+    </form>
+    <script src="jquery.min.js"></script>
+    <script>
+
+        var medicines = '[{ "medicine": "Abacavir", "id": "1" }, { "medicine": "Abacavir / dolutegravir / lamivudine", "id": "2" }, { "medicine": "Acyclovir", "id": "3" }, { "medicine": "Alemtuzumab", "id": "4" }, { "medicine": "Alendronate", "id": "5" }, { "medicine": "Allopurinol", "id": "6" }, { "medicine": "Amifostine", "id": "7" }, { "medicine": "Aminocaproic Acid", "id": "8" }, { "medicine": "Amitriptyline", "id": "9" }, { "medicine": "Amlodipine", "id": "10" }, { "medicine": "Amoxicillin", "id": "11" }, { "medicine": "Amoxicillin / clavulanic acid", "id": "12" }, { "medicine": "Amphotericin B", "id": "13" }, { "medicine": "Ampicillin", "id": "14" }, { "medicine": "Anti-Inhibitor Coagulant Complex (FEIBA)", "id": "15" }, { "medicine": "Anti-thymocyte globulin", "id": "16" }, { "medicine": "Aprepitant", "id": "17" }, { "medicine": "Asparaginase", "id": "18" }, { "medicine": "Atazanavir (Reyataz)", "id": "19" }, { "medicine": "Atenolol", "id": "20" }, { "medicine": "Atovaquone", "id": "21" }, { "medicine": "Azithromycin", "id": "22" }, { "medicine": "Baclofen", "id": "23" }, { "medicine": "Azithromycin", "id": "24" }, { "medicine": "Bleomycin", "id": "25" }, { "medicine": "Bortezomib", "id": "26" }, { "medicine": "Bosentan", "id": "27" }, { "medicine": "Busulfan", "id": "28" }, { "medicine": "Calcium", "id": "29" }, { "medicine": "Captopril", "id": "30" }, { "medicine": "Carbamazepine", "id": "31" }, { "medicine": "Carboplatin", "id": "32" }, { "medicine": "Carmustine", "id": "33" }, { "medicine": "Cefaclor", "id": "34" }, { "medicine": "Cefepime", "id": "35" }, { "medicine": "Cefixime", "id": "36" }, { "medicine": "Ceftazidime", "id": "37" }, { "medicine": "Cefuroxime", "id": "38" }, { "medicine": "Celecoxib", "id": "39" }, { "medicine": "Cephalexin", "id": "40" }, { "medicine": "Cidofovir", "id": "41" }, { "medicine": "Cisplatin", "id": "42" }, { "medicine": "Cladribine", "id": "43" }, { "medicine": "Cladribine", "id": "44" }, { "medicine": "Clarithromycin", "id": "45" }, { "medicine": "Clindamycin", "id": "46" }, { "medicine": "Clobazam", "id": "47" }, { "medicine": "Clofarabine", "id": "48" }, { "medicine": "Codeine", "id": "49" }, { "medicine": "Crizanlizumab", "id": "50" }]';
+
+        var json_obj = $.parseJSON(medicines);
+        var final_transcript = "";
+        var inteim_transcript = "";
+        var recognizing = false;
+        var ignore_onend;
+        var start_timestamp;
+
+        if (!('webkitSpeechRecognition' in window)) {
+            alert("Speech is not available in your Internet Browser,\nIf you want to use Web Speech,\nPlease Upgrade to Google Chrome Version greater than 33.0");
+        } else {
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = false;
+
+            recognition.onstart = function () {
+                recognizing = true;
+                start_img.src = 'mic-animate.gif';
+            };
+
+            var output = "";
+            var mediOut = "";
+            var unitOut = "";
+            var dosOut = "";
+
+            recognition.onresult = function (event) {
+                interim_transcript = "";
+                final_transcript = "";
+                var current = event.resultIndex;
+                var trans = event.results[current][0].transcript;
+                var elmId = document.activeElement.id;
+
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        var tabindex = parseInt(document.activeElement.getAttribute('tabindex'));
+                        if (tabindex == 11) {
+                            for (var j in json_obj) {
+                                if (trans.toLowerCase().trim() == json_obj[j].medicine.toLowerCase() || trans.trim() == json_obj[j].id) {
+                                    final_transcript += json_obj[j].medicine;
+                                    mediOut = final_transcript;
+                                    $('[tabindex= 12]').focus();
+                                }
+                            }
+                        }
+                        else if (tabindex == 12) {
+                            final_transcript += event.results[i][0].transcript;
+                            unitOut = event.results[i][0].transcript;
+                            $('[tabindex= 13]').focus();
+                        }
+
+                        else if (tabindex == 13) {
+                            output = "<tr><td width='40%'><ul><li>" + mediOut + "</li></ul></td><td width='30% '>" + unitOut + "</td><td width='30% '>" + dosOut + "</td></tr>";
+                            if (trans.trim() == "insert" || trans.trim() == "insert insert" || trans.trim() == "insertinsert") {
+                                $("#tblMedication tbody").append(output);
+                                $('[tabindex= 11]').focus();
+                                unitOut = mediOut = dosOut = "";
+                                document.getElementById("txtMedication").value = "";
+                                document.getElementById("txtUnit").value = "";
+                                document.getElementById("txtDosage").value = "";
+                            }
+                            else if (trans.trim() == "next" || trans.trim() == "nextnext" || trans.trim() == "next next") {
+                                if (mediOut != "" || unitOut != "" || dosOut != "") {
+                                    $("#tblMedication tbody").append(output);
+                                    unitOut = mediOut = dosOut = "";
+                                    document.getElementById("txtMedication").value = "";
+                                    document.getElementById("txtUnit").value = "";
+                                    document.getElementById("txtDosage").value = "";
+                                }
+                                $('[tabindex= 14]').focus();
+                                final_transcript = "";
+                            }
+                            else {
+                                final_transcript += event.results[i][0].transcript;
+                                dosOut = event.results[i][0].transcript;
+                            }
+                        }
+
+                        else {
+                            if (trans.trim() == "next" || trans.trim() == "nextnext" || trans.trim() == "next next") {
+                                if (tabindex < 14) {
+                                    tabindex = tabindex + 1;
+                                    $('[tabindex=' + tabindex + ']').focus();
+                                }
+                                else {
+                                    $('[tabindex=1]').focus();
+                                }
+                                final_transcript = "";
+                            }
+
+                            else if (trans.trim() == "previous" || trans.trim() == "previousprevious" || trans.trim() == "previous previous") {
+                                if (!tabindex < 1) {
+                                    tabindex = tabindex - 1;
+                                    $('[tabindex=' + tabindex + ']').focus();
+                                }
+                                else {
+                                    $('[tabindex=1]').focus();
+                                }
+                                final_transcript = "";
+                            }
+
+                            else if (trans.trim() == "new line" || trans.trim() == "new linenew line" || trans.trim() == "new line new line") {
+                                final_transcript += "\n";
+                            }
+
+                            else if (trans.trim() == "space" || trans.trim() == "spacespace" || trans.trim() == "space space") {
+                                final_transcript += "\t";
+                            }
+
+                            else {
+                                final_transcript = event.results[i][0].transcript;
+                            }
+                        }
+                    }
+                }
+                document.getElementById(elmId).value += final_transcript;
+            };
+
+            recognition.onspeechend = function () {
+                recognition.stop();
+            };
+
+            recognition.onerror = function (event) {
+                if (event.error == 'no-speech') {
+                    start_img.src = 'mic.gif';
+                    ignore_onend = true;
+                }
+                if (event.error == 'audio-capture') {
+                    start_img.src = 'mic.gif';
+                    showInfo('info_no_microphone');
+                    ignore_onend = true;
+                }
+            };
+
+            recognition.onend = function () {
+                recognizing = false;
+                if (ignore_onend) {
+                    return;
+                }
+                start_img.src = 'mic.gif';
+            };
+        }
+
+        $(document).ready(function () {
+            $('input')[0].focus();
+            recognition.lang = 'en-IN';
+            recognition.start();
+            ignore_onend = false;
+            start_img.src = 'mic-slash.gif';
+        });
+
+        $(function () {
+            $('#start_img').click(function () {
+                if (!('webkitSpeechRecognition' in window)) {
+                    alert("Speech is not available in your Internet Browser,\nIf you want to use Web Speech,\nPlease Upgrade to Google Chrome Version greater than 33.0");
+                } else {
+                    if (recognizing) {
+                        recognition.stop();
+                    } else {
+                        recognition.start();
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
